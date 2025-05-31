@@ -37,7 +37,6 @@ words = [
 "anus",
 "apeshit",
 "arsehole",
-"ass",
 "asshole",
 "assmunch",
 "autoerotic",
