@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="no-profanity",
-    version="1.0.4",
+    version="1.0.0",
     author="GlitchedLime",
     author_email="gabcosamuel8@gmail.com",
     description="A library using regex manipulation to detect and block profanity in strings.",
