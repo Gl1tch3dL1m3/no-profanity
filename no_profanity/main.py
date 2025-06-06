@@ -43,7 +43,7 @@ class ProfanityFilter:
 	# Full profanity detector
 	def __detector(self, txt):
 		# Filtered text (replaced symbols)
-		filter_txt = self.__replace_letter_symbols(txt)
+		filter_txt = self.__replace_letter_symbols(txt).lower()
 
 		# Remove unreplaced symbols
 		index = -1
@@ -105,6 +105,11 @@ class ProfanityFilter:
 		self.__words += [x.replace(" ", "") for x in words]
 		self.__make_regexes()
 
+	# Add custom wordlist
+	def add_custom_wordlist(self, filepath: str) -> None:
+		file = open(filepath, "r")
+		self.add_custom_words([x.strip() for x in file.readlines()])
+
 	# Set censor symbol (used in censor_text())
 	def set_censor_symbol(self, censor_symbol: str) -> None:
 		self.__censor_symbol = censor_symbol
@@ -142,5 +147,14 @@ class ProfanityFilter:
 
 	"""
 
-	def full_detection(self, txt) -> list:
-		return self.__detector(txt)
+	def full_detection(self, txt: str) -> list[dict]:
+		to_return = []
+		for detection in self.__detector(txt):
+			to_return.append({
+				"string_match": detection[0],
+				"start": detection[1],
+				"end": detection[2] + 1,
+				"found_word": detection[3]
+			})
+
+		return to_return
