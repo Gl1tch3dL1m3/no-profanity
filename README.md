@@ -10,24 +10,35 @@ from no_profanity import ProfanityFilter
 # ProfanityFilter(censor_symbol: str = "*")
 filter = ProfanityFilter()
 
-# 1. Add Custom Words
+# add_custom_words(words: list) -> None
 filter.add_custom_words(["happy", "hello"])
 
-# 2. Set Censor Symbol
+# add_custom_wordlist(filepath: str) -> None
+filter.add_custom_wordlist("./wordlist.txt")
+
+# set_censor_symbol(censor_symbol: str) -> None
 filter.set_censor_symbol("-")
 
-# 3. is_profanity(txt: str) -> bool
+# is_profanity(txt: str) -> bool
 filter.is_profanity("my name is Lime") # False
 filter.is_profanity("shut the fuck up") # True
 
-# 4. censor_text(txt: str, censor_symbol: str = None) -> str
-filter.censor_text("what the fuck is this") # what the ---- is this
+# censor_text(txt: str, censor_symbol: str = None) -> str
+filter.censor_text("what the fuck is this") # Output: what the ---- is this
 
 # Without set_censor_symbol(): what the **** is this
 
-# 5. full_detection(txt: str) -> list
-# [[match_in_string, start_index, end_index, found_word], ...]
-filter.full_detection("you fuck1ng bitch") # [["fuck1ng", 4, 10, "fucking"], ["bitch", 12, 16, "bitch"]]
+# full_detection(txt: str) -> list[dict]
+# [
+#   {
+#       string_match,
+#       start,
+#       end,
+#       found_word
+#   }, ...
+# ]
+
+filter.full_detection("you fuck1ng bitch") # [{'string_match': 'fuck1ng', 'start': 4, 'end': 11, 'found_word': 'fucking'}, {'string_match': 'bitch', 'start': 12, 'end': 17, 'found_word': 'bitch'}]
 ```
 
 ## Pros
